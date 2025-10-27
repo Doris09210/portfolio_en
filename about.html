@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Du Yao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #3f51b5;
+            --accent-blue: #2196f3;
+            --light-blue: #e3f2fd;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #fafafa;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #60a5fa, #a78bfa);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: #60a5fa;
+            border-radius: 50%;
+            border: 3px solid #1e293b;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-semibold">
+                    <a href="index.html">Du Yao</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="projects.html" class="nav-link">Projects</a>
+                    <a href="research.html" class="nav-link">Research</a>
+                    <a href="about.html" class="nav-link text-blue-400">About</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Personal Introduction -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <img src="resources/avatar.png" alt="Du Yao" class="w-46 h-64 rounded-full mx-auto mb-6 border-4 border-white/20 shadow-2xl">
+                <h1 class="hero-title text-4xl md:text-5xl font-bold mb-4">About Me</h1>
+                <p class="text-xl text-gray-300">
+                    An interaction design graduate student still exploring
+                </p>
+            </div>
+            
+            <div class="glass-card rounded-2xl p-8 mb-12">
+                <h2 class="text-2xl font-semibold mb-6">Personal Story</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p>
+                        Hi, I'm Du Yao - currently still exploring in the Design Science program at the School of Mechanical Engineering, Southeast University.
+                        My research interests are simple: <strong class="text-blue-400">making AI more usable through cognitive science, making complex information simpler through design</strong>.
+                    </p>
+                    <p>
+                        In my studies at Southeast University's School of Mechanical Engineering Design Science program, I focus on applying cognitive psychology theories to practical interface design.
+                        Through Unity interactive prototypes, combined with eye-tracking and behavioral data analysis, I attempt to understand users' cognitive processes when interacting with AI systems,
+                        and optimize interface design based on these insights.
+                    </p>                    
+                    <p>
+                        I believe that future AI systems must not only be intelligent, but also "thoughtful." By deeply understanding human cognitive characteristics and interaction habits,
+                        we can design more human-centered and efficient AI interfaces, making technology truly serve humanity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Education Background -->
+    <section class="pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Education Background</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Southeast University · Master of Design Science</h3>
+                            <span class="text-sm text-gray-400">2023.09 - 2026.06</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            School of Mechanical Engineering Design Science program, focusing on human factors engineering and AI interaction design research
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-blue-400">Core Courses</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Human Factors Engineering (94 points)</li>
+                                    <li>• Introduction to Neurodesign (92 points)</li>
+                                    <li>• Design Semiotics (92 points)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 text-green-400">Research Directions</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• RLHF Interface Optimization</li>
+                                    <li>• Cognitive Load Assessment</li>
+                                    <li>• Eye-tracking Research</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Chongqing University · Bachelor of Industrial Design</h3>
+                            <span class="text-sm text-gray-400">2019.09 - 2023.06</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            School of Mechanical and Vehicle Engineering Industrial Design program, average score 86.64/100
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-purple-400">Excellent Courses</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Design Psychology (97 points)</li>
+                                    <li>• Interaction Design and User Experience (93 points)</li>
+                                    <li>• Product Innovation Design Management (92 points)</li>
+                                    <li>• Computer-Aided Design (91 points)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 text-orange-400">Honors & Awards</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• National Scholarship</li>
+                                    <li>• Internet+ National Gold Medal</li>
+                                    <li>• Chongqing Innovation and Entrepreneurship Advanced Individual</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Professional Skills -->
+    <section class="pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Professional Skills</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-8">Technical Skills</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Python</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Unity/C#</span>                               
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Figma/Design Tools</span>                               
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>SPSS/Data Analysis</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>SolidWorks/CATIA</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Research Skills -->
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-8">Research Skills</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Experimental Design</span>                               
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="92"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>User Research</span>                               
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Eye-tracking</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Data Analysis</span>                               
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Academic Writing</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Internship Experience -->
+    <section class="pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Internship Experience</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">CISDI Group Co., Ltd. · Modeling & Drafting Engineer</h3>
+                            <span class="text-sm text-gray-400">2022.07 - 2023.08</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            Used SolidWorks for mechanical component and assembly modeling, independently produced nearly 300 A0 drawings
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-blue-400">Main Responsibilities</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• 3D modeling of mechanical components</li>
+                                    <li>• Assembly design and optimization</li>
+                                    <li>• A0 engineering drawing output</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 text-green-400">Achievements</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Produced nearly 300 engineering drawings</li>
+                                    <li>• Covered structural parts and assemblies</li>
+                                    <li>• Completed modeling and assembly of several steel rolling equipment sets</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Langjian Yuli Technology Co., Ltd. · Interaction Designer</h3>
+                            <span class="text-sm text-gray-400">2022.06 - 2022.07</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            Completed high-fidelity interface design based on user needs, collaborated with engineering and client teams to advance product prototype demonstration and delivery
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-purple-400">Work Content</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• High-fidelity interface design</li>
+                                    <li>• User flow optimization</li>
+                                    <li>• Prototype creation and presentation</li>
+                                    <li>• Client communication and collaboration</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2 text-orange-400">Project Results</h4>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Completed 5 core interfaces</li>
+                                    <li>• Successful product delivery</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Practical Experience -->
+    <section class="pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-10 text-center">Practical Experience</h2>
+        <div class="glass-card p-8 rounded-xl text-white">
+        <!-- Single layout, left-aligned, thin dividing lines -->
+        <div class="divide-y divide-gray-600/30 space-y-0">
+
+        <!-- Student Work -->
+        <div class="flex items-start space-x-4 py-6">
+            <div class="text-2xl text-blue-400">🎓</div>
+            <div class="flex-1">
+            <h3 class="text-base font-semibold text-white mb-2">Student Work</h3>
+            <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+                <li>Chongqing University Archives Tour Group · Team Leader</li>
+                <li>Mechanical and Vehicle Engineering Debate Team · Vice Captain</li>
+                <li>Graduate Student Union Practice Service Center · Member</li>
+                <li>Grade Assistant</li>
+            </ul>
+            </div>
+        </div>
+
+        <!-- Practical Activities -->
+        <div class="flex items-start space-x-4 py-6">
+            <div class="text-2xl text-green-400">🌱</div>
+            <div class="flex-1">
+            <h3 class="text-base font-semibold text-white mb-2">Practical Activities</h3>
+            <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+                <li>"Sunflower Blooming" National Innovation Practice Project</li>
+            </ul>
+            </div>
+        </div>
+
+        <!-- Volunteer Activities -->
+        <div class="flex items-start space-x-4 py-6">
+            <div class="text-2xl text-purple-400">🤝</div>
+            <div class="flex-1">
+            <h3 class="text-base font-semibold text-white mb-2">Volunteer Activities</h3>
+            <ul class="text-sm text-gray-300 list-disc list-inside space-y-1">
+                <li>Chongqing Changjia Bay Half Marathon Volunteer Service Group · Organization & Coordination</li>
+                <li>8th "Internet+" Innovation and Entrepreneurship Competition · Volunteer Team Leader</li>
+                <li>400+ hours of volunteer service</li>
+            </ul>
+            </div>
+        </div>
+
+        </div>
+        </div>
+    </div>
+    </section>
+    
+    <!-- Personal Traits -->
+    <section class="pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Personal Traits</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-lg font-semibold mb-6 text-blue-400">Core Strengths</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                            Emotionally stable, highly self-motivated
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                            Outstanding interdisciplinary communication skills
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                            Strong experimental design and execution capabilities
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                            Integration of academic research and practice
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
+                            Team collaboration and leadership abilities
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-lg font-semibold mb-6 text-purple-400">Hobbies & Interests</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            Sports
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            Movies
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            Pets
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            Music
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
+                            Shopping
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12">Contact Me</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-6 rounded-xl text-center">
+                <div class="text-3xl mb-3">📧</div>
+                <h3 class="font-semibold mb-2">Email</h3>
+                <p class="text-sm text-gray-400">duyao@seu.edu.cn</p>
+            </div>
+            <div class="glass-card p-6 rounded-xl text-center">
+                <div class="text-3xl mb-3">📞</div>
+                <h3 class="font-semibold mb-2">Phone</h3>
+                <p class="text-sm text-gray-400">199-6075-4753</p>
+            </div>
+            </div>
+            
+            <!-- Download Resume Buttons -->
+            <div class="flex justify-center items-center gap-4 mt-8">
+            <!-- Chinese -->
+            <a href="resources/CV-DuYao-CN.pdf" download
+                class="glass-button px-6 py-3 rounded-full inline-flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download Chinese Resume
+            </a>
+
+            <!-- English -->
+            <a href="resources/CV-DuYao-EN.pdf" download
+                class="glass-button px-6 py-3 rounded-full inline-flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download English CV
+            </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-400 border-t border-white/10">
+        <p>&copy; 2025 Du Yao. fighting fighting fighting 💪</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Skill bar animation
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const animateSkillBars = () => {
+                skillBars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    setTimeout(() => {
+                        bar.style.width = width + '%';
+                    }, 500);
+                });
+            };
+            
+            // Trigger animation using Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateSkillBars();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const skillsSection = document.querySelector('.glass-card:has(.skill-progress)');
+            if (skillsSection) {
+                observer.observe(skillsSection);
+            }
+            
+            // Page loading animation
+            anime({
+                targets: '.glass-card',
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 800,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(100)
+            });
+            
+            // Timeline animation
+            anime({
+                targets: '.timeline-item',
+                opacity: [0, 1],
+                translateX: [-50, 0],
+                duration: 600,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(200, {start: 500})
+            });
+            
+            // Button interaction effects
+            const buttons = document.querySelectorAll('.glass-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    anime({
+                        targets: this,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

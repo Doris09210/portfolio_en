@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Research - Du Yao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #3f51b5;
+            --accent-blue: #2196f3;
+            --light-blue: #e3f2fd;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #fafafa;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .research-timeline {
+            position: relative;
+        }
+        
+        .research-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #60a5fa, #a78bfa);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: #60a5fa;
+            border-radius: 50%;
+            border: 3px solid #1e293b;
+        }
+        
+        .citation-metric {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-semibold">
+                    <a href="index.html">Du Yao</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="projects.html" class="nav-link">Projects</a>
+                    <a href="research.html" class="nav-link text-blue-400">Research</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Title -->
+    <section class="pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-5xl md:text-6xl font-bold mb-6">Academic Research</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Exploring cutting-edge research in human factors engineering and AI interaction design, making AI more usable through cognitive science
+            </p>
+        </div>
+    </section>
+    
+    <!-- Research Overview -->
+    <section class="pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div class="citation-metric glass-card p-6 rounded-xl text-center">
+                    <div class="text-3xl font-bold text-blue-400 mb-2">2</div>
+                    <div class="text-gray-300">Published Papers</div>
+                </div>
+                <div class="citation-metric glass-card p-6 rounded-xl text-center">
+                    <div class="text-3xl font-bold text-purple-400 mb-2">1</div>
+                    <div class="text-gray-300">HCII 2025</div>
+                </div>
+                <div class="citation-metric glass-card p-6 rounded-xl text-center">
+                    <div class="text-3xl font-bold text-green-400 mb-2">1</div>
+                    <div class="text-gray-300">Submitted Paper</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Academic Papers -->
+    <section class="pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Academic Papers</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Paper 1 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-3">
+                                Research on the Multi-Chart Layout Design of Large-Screen Interface
+                            </h3>
+                            <p class="text-gray-400 mb-4">HCII 2025 · First Author</p>
+                        </div>
+                        <div class="ml-4">
+                            <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Accepted</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        This study addresses the multi-chart layout design problem for large-screen interfaces, using Unity to build interactive experimental environments and Linear Mixed Models (LMM) for cognitive load assessment.
+                        The research proposes multi-chart layout optimization principles based on cognitive load theory, providing scientific basis for complex information interface design.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Research Methods</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-blue-500/20 text-xs rounded">Unity Experiment</span>
+                                <span class="px-2 py-1 bg-purple-500/20 text-xs rounded">LMM Analysis</span>
+                                <span class="px-2 py-1 bg-green-500/20 text-xs rounded">NASA-TLX</span>                                
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Key Findings</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Optimized layouts can reduce cognitive load</li>
+                                <li>• Information density and cognitive load show nonlinear relationship</li>
+                                <li>• Visual hierarchy structure affects information processing efficiency</li>
+                            </ul>
+                        </div>
+                    </div>                   
+                    
+                </div>
+                
+                <!-- Paper 2 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold mb-3">
+                                Designing RLHF Interfaces for Efficient and High-Quality Human Feedback
+                            </h3>
+                            <p class="text-gray-400 mb-4">Submitted · First Author</p>
+                        </div>
+                        <div class="ml-4">
+                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">Submitted</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        This study focuses on interface design issues in Human Feedback Reinforcement Learning (RLHF), constructing conversational RLHF interfaces based on Shared Mental Models (SMM) theory.
+                        By integrating behavioral data and eye-tracking data, deeply explores the influence mechanism of feedback transparency on cognitive load.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Theoretical Framework</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-pink-500/20 text-xs rounded">Shared Mental Models</span>
+                                <span class="px-2 py-1 bg-purple-500/20 text-xs rounded">RLHF</span>
+                                <span class="px-2 py-1 bg-indigo-500/20 text-xs rounded">Cognitive Load</span>
+                                <span class="px-2 py-1 bg-teal-500/20 text-xs rounded">Conversational UI</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Expected Contributions</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Construct SMM-driven RLHF interactive cognitive framework</li>
+                                <li>• Design verifiable conversational UI solutions</li>
+                                <li>• Vertically trained models</li>
+                                <li>• Design strategies to improve human-computer collaboration efficiency</li>
+                            </ul>
+                        </div>
+                    </div>                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Research Timeline -->
+    <section class="pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Research Journey</h2>
+            
+            <div class="research-timeline">
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Master's Thesis Launch</h3>
+                            <span class="text-sm text-gray-400">2024.11</span>
+                        </div>
+                        <p class="text-gray-300">
+                            Started "Interface Design and Interaction Optimization Research for Human Feedback Reinforcement Learning" project, building theoretical framework and research methodology.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">HCII 2025 Paper Acceptance</h3>
+                            <span class="text-sm text-gray-400">2024.12</span>
+                        </div>
+                        <p class="text-gray-300">
+                            Leadership dashboard interface optimization research paper accepted by HCII 2025 conference, to be presented at conference in June 2025.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">RLHF Research Submitted</h3>
+                            <span class="text-sm text-gray-400">2025.11</span>
+                        </div>
+                        <p class="text-gray-300">
+                            Completed RLHF interface design research, submitted to human-computer interaction journal, currently under review.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="glass-card p-6 rounded-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">Expected Graduation</h3>
+                            <span class="text-sm text-gray-400">2026.06</span>
+                        </div>
+                        <p class="text-gray-300">
+                            Complete master's degree, continue in-depth research in human factors engineering and AI interaction design.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Research Interests -->
+    <section class="pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Research Interests</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-cognitive.svg" class="w-12 h-12 mx-auto mb-3" alt="Cognitive Human Factors"/>
+                    <p class="text-gray-300 text-sm">
+                        Study the matching relationship between human cognitive capabilities and interface design to optimize cognitive efficiency of human-computer interaction.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-ai.svg" class="w-12 h-12 mx-auto mb-3" alt="AI Interaction Design"/>
+                    <p class="text-gray-300 text-sm">
+                        Explore interaction design principles for artificial intelligence systems to make AI easier to understand and use.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-eye.svg" class="w-12 h-12 mx-auto mb-3" alt="Eye-tracking Research"/>
+                    <p class="text-gray-300 text-sm">
+                        Use eye-tracking technology to deeply understand users' visual attention mechanisms and guide interface layout optimization.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-viz.svg" class="w-12 h-12 mx-auto mb-3" alt="Data Visualization"/>
+                    <p class="text-gray-300 text-sm">
+                        Research visualization methods for complex data to improve information transmission efficiency and accuracy.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-rlhf.svg" class="w-12 h-12 mx-auto mb-3" alt="RLHF Optimization"/>
+                    <p class="text-gray-300 text-sm">
+                        Explore interface design in human feedback reinforcement learning to improve feedback quality and efficiency.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <img src="resources/icon-ux.svg" class="w-12 h-12 mx-auto mb-3" alt="User Experience Research"/>
+                    <p class="text-gray-300 text-sm">
+                        Develop quantitative and measurement methods for user interaction experience to establish scientific evaluation systems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-400 border-t border-white/10">
+        <p>&copy; 2025 Du Yao. fighting fighting fighting 💪</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Page loading animation
+            anime({
+                targets: '.glass-card',
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 800,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(100)
+            });
+            
+            // Timeline animation
+            anime({
+                targets: '.timeline-item',
+                opacity: [0, 1],
+                translateX: [-50, 0],
+                duration: 600,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(200, {start: 500})
+            });
+            
+            // Button interaction effects
+            const buttons = document.querySelectorAll('.glass-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    anime({
+                        targets: this,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

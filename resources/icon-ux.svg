@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="gradUserV2" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7CC9FF"/>
+      <stop offset="100%" stop-color="#8A7CFF"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0A1020" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="20" fill="#0D1326"/>
+  <rect x="8" y="8" width="112" height="112" rx="20" stroke="url(#gradUserV2)" stroke-width="2" fill="none"/>
+  <g stroke="url(#gradUserV2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#softShadow)">
+  
+  <circle cx="64" cy="48" r="14" fill="none"/>
+  <path d="M32 92c8-14 24-18 32-18s24 4 32 18" fill="none"/>
+  <path d="M80 88c2-4 8-6 12-2 3-3 8-2 10 1 3 5-4 12-10 16-6-4-13-11-12-15z" fill="none"/>
+
+  </g>
+</svg>

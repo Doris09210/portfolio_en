@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Du Yao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #3f51b5;
+            --accent-blue: #2196f3;
+            --light-blue: #e3f2fd;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #fafafa;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            cursor: pointer;
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(96, 165, 250, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button:hover {
+            background: rgba(96, 165, 250, 1);
+            transform: scale(1.1);
+        }
+        
+        .project-filter {
+            transition: all 0.3s ease;
+        }
+        
+        .project-filter.active {
+            background: rgba(96, 165, 250, 0.3);
+            border-color: rgba(96, 165, 250, 0.5);
+        }
+        
+        .project-item {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.5s ease;
+        }
+        
+        .project-item.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Thumb */
+        ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #60a5fa, #a78bfa);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+        transition: all 0.3s ease;
+        }
+
+        /* Thumb hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #93c5fd, #c4b5fd);
+        box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
+        }
+
+        /* Thumb active */
+        ::-webkit-scrollbar-thumb:active {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        /* Corner */
+        ::-webkit-scrollbar-corner {
+        background: transparent;
+        }
+        /* Only for glass cards that need scrolling */
+        .glass-card {
+        overflow-y: auto;
+        scrollbar-gutter: stable both-edges;
+        }
+
+        /* Scrollbar */
+        .glass-card::-webkit-scrollbar {
+        width: 6px;
+        }
+
+        /* Track: completely transparent glass */
+        .glass-card::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.03);
+        border-radius: 10px;
+        margin: 12px 0;
+        }
+
+        /* Thumb: misty blue + low saturation */
+        .glass-card::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.4);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+        transition: all .25s ease;
+        }
+
+        /* Hover highlight */
+        .glass-card::-webkit-scrollbar-thumb:hover {
+        background: rgba(148, 163, 184, 0.7);
+        }
+
+        /* Firefox sync */
+        .glass-card {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-semibold">
+                    <a href="index.html">Du Yao</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="projects.html" class="nav-link text-blue-400">Projects</a>
+                    <a href="research.html" class="nav-link ">Research</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Title -->
+    <section class="pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="hero-title text-5xl md:text-6xl font-bold mb-6">Project Showcase</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Practical projects in human factors engineering, AI interaction design, and cognitive science
+            </p>
+        </div>
+    </section>
+    
+    <!-- Project Filters -->
+    <section class="pb-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="project-filter glass-button px-6 py-3 rounded-full active" data-filter="all">
+                    All Projects
+                </button>
+                <button class="project-filter glass-button px-6 py-3 rounded-full" data-filter="research">
+                    Academic Research
+                </button>
+                <button class="project-filter glass-button px-6 py-3 rounded-full" data-filter="industry">
+                    Industry Projects
+                </button>
+                <button class="project-filter glass-button px-6 py-3 rounded-full" data-filter="ui-design">
+                    UI Design
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Project Grid -->
+    <section class="pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Project 1: Leadership Dashboard -->
+                <div class="project-item glass-card rounded-2xl p-8" data-category="industry ui-design">
+                    <div class="mb-6">
+                        <img src="resources/leader-project.png" alt="Leadership Dashboard Interface" class="w-full h-64 object-cover rounded-xl">
+                    </div>
+                    
+                    <h3 class="text-2xl font-semibold mb-4">Ergonomic Analysis of Leadership Dashboard Human-Machine Interface</h3>
+                    <!-- Timeline ribbon -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-900/40 text-slate-200 border border-slate-700 backdrop-blur-sm mb-3">
+                     2023.10 – 2025.01
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Human Factors</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">UI Design</span>
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">HCII2025</span>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Based on cognitive load theory, conducted in-depth research on multi-chart layout design for large-screen interfaces. Through Unity interactive experiments,
+                        combined with behavioral analysis and NASA-TLX scales, verified that optimized interface design can significantly reduce user cognitive load.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Core Contributions</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Designed and implemented Unity interactive experiments, recruited 30+ participants</li>
+                                <li>• Contributed to high-fidelity interface prototype development</li>
+                                <li>• Contributed to interface design specifications and usage documentation</li>
+                                <li>• HCII 2025 conference paper accepted</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Tools Used</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Unity</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">C#</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Figma</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">SPSS</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">MATLAB</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button class="glass-button w-full py-3 rounded-lg" 
+                        onclick="showImageGallery('leadership-ui')">
+                        Interface Showcase
+                    </button>
+                    </div>
+                </div>
+                
+                <!-- Project 2: Equipment Interface Platform -->
+                <div class="project-item glass-card rounded-2xl p-8" data-category="industry ui-design">
+                    <div class="mb-6">
+                        <img src="resources/military-platform.png" alt="Equipment Interface Platform" class="w-full h-64 object-cover rounded-xl">
+                    </div>
+                    
+                    <h3 class="text-2xl font-semibold mb-4">Equipment Interface Application Platform Development</h3>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-900/40 text-slate-200 border border-slate-700 backdrop-blur-sm mb-3">
+                     2024.02 – Present
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Military Science Commission</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">300+ Interfaces</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Experimental Paradigm</span>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Participated in Military Science Commission collaborative project, responsible for overall interaction design of equipment interface application platform. From competitive research to functional architecture,
+                        to detailed design of 300+ interfaces, platform is nearing delivery and supports subsequent brain-computer experiments and cognitive ergonomics assessment.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Project Responsibilities</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Participated in competitive research and functional architecture design</li>
+                                <li>• Led design of 300+ interface interaction prototypes</li>
+                                <li>• Established design specifications and component libraries</li>                                
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Design Tools</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Figma</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Xmind</span>                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button class="glass-button flex-1 py-3 rounded-lg" onclick="showImageGallery('components')">Component Showcase</button>
+                        <button class="glass-button flex-1 py-3 rounded-lg" onclick="showImageGallery('interfaces')">Interface Showcase</button>
+                    </div>
+                </div>
+                
+                <!-- Project 3: Driver Seat Comfort Research -->
+                <div class="project-item glass-card rounded-2xl p-8" data-category="industry ">
+                    <div class="mb-6">
+                        <img src="resources/seat.png" alt="Leadership Dashboard Interface" class="w-full h-64 object-cover rounded-xl">
+                    </div>
+                    
+                    <h3 class="text-2xl font-semibold mb-4">Research on Static Comfort Evaluation System for Driver Seats</h3>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-900/40 text-slate-200 border border-slate-700 backdrop-blur-sm mb-3">
+                     2022.05 – 2022.09
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-sm">Industry-Academia Project</span>
+                        <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">Reverse Modeling</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Point Cloud Collection</span>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Participated in industry-academia collaborative project, responsible for multi-vehicle seat point cloud collection and CATIA reverse modeling work.
+                        Research results incorporated into enterprise digital model library, providing data support for subsequent product iterations.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Core Work</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Multi-vehicle seat point cloud collection</li>
+                                <li>• CATIA reverse modeling and optimization</li>
+                                <li>• Results incorporated into enterprise digital model library</li>
+                                <li>• Supported subsequent product iteration design</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Technical Tools</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">CATIA</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Point Cloud Processing</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Reverse Engineering</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Data Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button class="glass-button flex-1 py-3 rounded-lg" onclick="showImageGallery('seat-results')">
+                        Results Showcase
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 4: RLHF Interface Research -->
+                <div class="project-item glass-card rounded-2xl p-8" data-category="research ui-design">
+                    <div class="mb-6">
+                        <img src="resources/research-bg.png" alt="Leadership Dashboard Interface" class="w-full h-64 object-cover rounded-xl">
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-slate-900/40 text-slate-200 border border-slate-700 backdrop-blur-sm mb-3">
+                     2024.11 – Present
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4">Interface Design for Human Feedback Reinforcement Learning</h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm">Master's Thesis</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Shared Mental Models</span>
+                        <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm">RLHF</span>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Currently ongoing master's thesis research, building conversational RLHF interface based on Shared Mental Models (SMM) theory.
+                        By integrating behavioral data and eye-tracking data, verifying the influence mechanism of feedback transparency on cognitive load.
+                        Building vertical datasets and training vertical small models.
+                    </p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Research Innovation</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Construct SMM-driven RLHF interactive cognitive framework</li>
+                                <li>• Design and validate conversational UI</li>
+                                <li>• Closed-loop fine-tuning of design-data-algorithm</li>                                
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold mb-2">Research Methods</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Python</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">RLHF</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Eye-tracking</span>
+                                <span class="px-2 py-1 bg-gray-700 text-xs rounded">Behavioral Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button class="glass-button flex-1 py-3 rounded-lg" onclick="showImageGallery('research-framework')">Research Framework</button>
+                        <button class="glass-button flex-1 py-3 rounded-lg" onclick="showImageGallery('experiment-env')">Experimental Environment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Image Gallery Modal -->
+    <div id="image-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4">
+            <div class="glass-card rounded-2xl p-6 max-w-4xl max-h-full overflow-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-title" class="text-xl font-semibold">Image Showcase</h3>
+                    <button id="close-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+                </div>
+                <div id="modal-content" class="space-y-4">
+                    <!-- Image content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-400 border-t border-white/10">
+        <p>&copy; 2025 Du Yao. fighting fighting fighting 💪</p>
+    </footer>
+    
+    <script>
+        
+        // Image gallery function
+        function showImageGallery(type) {
+            const modal = document.getElementById('image-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+            
+            // Define image data
+            const imageData = {
+                'leadership-ui': {
+                    title: 'Interface Showcase - Leadership Dashboard',
+                    images: [
+                        {
+                        src: 'resources/leadership-ui/1.png',
+                        title: 'Project Overview',
+                        description: 'Leadership dashboard human-machine interface ergonomic analysis and optimization design research'
+                        },
+                        {
+                        src: 'resources/leadership-ui/2.png',
+                        title: 'Problem Analysis',
+                        description: 'Existing problem analysis'
+                        },
+                        {
+                        src: 'resources/leadership-ui/3.png',
+                        title: 'Optimization Concept',
+                        description: 'Optimized design to improve user information processing efficiency'
+                        },
+                        {
+                        src: 'resources/leadership-ui/4.png',
+                        title: 'Optimization Focus',
+                        description: 'Improved overall dashboard interface usability from visual, interaction, and functional layers'
+                        },
+                        {
+                        src: 'resources/leadership-ui/5.png',
+                        title: 'Color Style',
+                        description: 'Designed three style options, ultimately selected purple-gold style representing Nanjing regional characteristics'
+                        },
+                        {
+                        src: 'resources/leadership-ui/6.png',
+                        title: 'Detail Optimization',
+                        description: 'Detailed optimization for charts, navigation, titles, etc.'
+                        },
+                        {
+                        src: 'resources/leadership-ui/7.png',
+                        title: 'Main Interface',
+                        description: 'Leadership dashboard main interface, includes 4 subsystems'
+                        },
+                        {
+                        src: 'resources/leadership-ui/8.png',
+                        title: 'Digital Layout Interface',
+                        description: 'Subsystem interface - Digital layout - Business management'
+                        },
+                        {
+                        src: 'resources/leadership-ui/9.png',
+                        title: 'Intelligent Applications',
+                        description: 'Subsystem interface - Intelligent applications'
+                        },
+                        {
+                        src: 'resources/leadership-ui/10.png',
+                        title: 'Project Results',
+                        description: 'Project deliverables overview'
+                        }
+                    ]
+                    },
+                'components': {
+                    title: 'Component Showcase - Equipment Interface Application Platform',
+                    images: [
+                        {
+                            src: 'resources/component1.png',
+                            title: 'Icon Component Design',
+                            description: 'Unified and standardized icon component library'
+                        },
+                        {
+                            src: 'resources/component2.png',
+                            title: 'Form Modal Components',
+                            description: 'Modular navigation components supporting multiple layout modes'
+                        },
+                        {
+                            src: 'resources/component3.png',
+                            title: 'Form Visualization Components',
+                            description: 'Standardized form input component collection'
+                        }
+                    ]
+                },
+                'interfaces': {
+                    title: 'Interface Showcase - Equipment Interface Application Platform',
+                    images: [
+                        {
+                            src: 'resources/interface1.png',
+                            title: 'Interface Ergonomics Evaluation Interface',
+                            description: 'Homepage - Interface Ergonomics Evaluation - Ergonomics Evaluation Plan Interface'
+                        },
+                        {
+                            src: 'resources/interface 2.png',
+                            title: 'Material Sorting Interface',
+                            description: 'Ergonomics Evaluation Plan - Edit Experiment - Material Sorting Interface'
+                        },
+                        {
+                            src: 'resources/interface 3.png',
+                            title: 'Personnel Interface',
+                            description: 'Ergonomics Evaluation Plan - Edit Experiment - Personnel Import Interface'
+                        }
+                    ]
+                },
+                'seat-results': {
+                    title: 'Results Showcase - Driver Seat Comfort Research',
+                    images: [
+                        {
+                        src: 'resources/seat-results/1.png',
+                        title: 'Sample Vehicle Physical Images',
+                        description: 'Sample vehicle experiment images'
+                        },
+                        {
+                        src: 'resources/seat-results/2 .png',
+                        title: 'Point Cloud Collection Results',
+                        description: 'Multi-vehicle seat point cloud data overview'
+                        },
+                        {
+                        src: 'resources/seat-results/3.png',
+                        title: 'CATIA Reverse Modeling',
+                        description: 'Seat surface reconstruction and model output'
+                        },
+                        
+                    ]
+                    },
+                'research-framework': {
+                    title: 'Research Framework - RLHF Interface Design Research',
+                    images: [
+                        {
+                            src: 'resources/framework1.png',
+                            title: 'SMM Cognitive Framework',
+                            description: 'Interactive cognitive framework based on shared mental models'
+                        },
+                        {
+                            src: 'resources/framework2.png',
+                            title: 'Research Process Design',
+                            description: 'Interface design and interaction optimization research for human feedback reinforcement learning'
+                        },
+                        
+                    ]
+                },
+                'experiment-env': {
+                    title: 'Experimental Environment - RLHF Interface Design Research',
+                    images: [
+                        {
+                            src: 'resources/experiment1.png',
+                            title: 'Experimental Environment',
+                            description: 'Eye-tracking and behavioral data collection environment'
+                        },
+                        {
+                            src: 'resources/experiment2.png',
+                            title: 'User Interaction Interface',
+                            description: 'User interaction interface prototype in experiment'
+                        },
+                        
+                    ]
+                }
+            };
+            
+            const data = imageData[type];
+            if (!data) {
+                alert('Image resources are being prepared, please stay tuned!');
+                return;
+            }
+            
+            modalTitle.textContent = data.title;
+            modalContent.innerHTML = '';
+            
+            data.images.forEach((image, index) => {
+                const imageElement = document.createElement('div');
+                imageElement.className = 'glass-card p-4 rounded-xl';
+                imageElement.innerHTML = `
+                    <img src="${image.src}" alt="${image.title}" class="w-full h-auto rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display:none;" class="w-full h-64 bg-gray-700 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-gray-400">Loading image...</span>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2">${image.title}</h4>
+                    <p class="text-gray-300 text-sm">${image.description}</p>
+                `;
+                modalContent.appendChild(imageElement);
+            });
+            
+            modal.classList.remove('hidden');
+            
+            // Add animation effects
+            anime({
+                targets: modal.querySelector('.glass-card'),
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutQuart'
+            });
+        }
+        
+        // Close modal function
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.add('hidden');
+        }
+        
+        // Project filtering function
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.project-filter');
+            const projectItems = document.querySelectorAll('.project-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update button states
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter projects
+                    projectItems.forEach(item => {
+                        const categories = item.getAttribute('data-category');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            item.classList.remove('hidden');
+                            anime({
+                                targets: item,
+                                opacity: [0, 1],
+                                scale: [0.8, 1],
+                                duration: 500,
+                                easing: 'easeOutQuart',
+                                delay: Math.random() * 200
+                            });
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            // Video player function
+            const videoPlayer = document.getElementById('video-player');
+            if (videoPlayer) {
+                videoPlayer.addEventListener('click', function() {
+                    // Add actual video playback logic here
+                    alert('Video playback function - This will play the CISDI modeling and drafting video');
+                });
+            }
+            
+            // Close modal events
+            const closeModalBtn = document.getElementById('close-modal');
+            const modal = document.getElementById('image-modal');
+            
+            if (closeModalBtn && modal) {
+                closeModalBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
+            }
+            
+            // Button interaction effects
+            const buttons = document.querySelectorAll('.glass-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    anime({
+                        targets: this,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutQuart'
+                    });
+                });
+            });
+            
+            // Page loading animation
+            anime({
+                targets: '.project-item',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 800,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(200)
+            });
+        });
+    </script>
+</body>
+</html>

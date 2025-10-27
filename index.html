@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Du Yao - Human Factors & AI Interaction Design Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #3f51b5;
+            --accent-blue: #2196f3;
+            --light-blue: #e3f2fd;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #fafafa;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .skill-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .skill-bar {
+        height: 8px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        }
+        .skill-progress {
+        height: 100%;
+        background: linear-gradient(90deg, #60a5fa, #a78bfa);
+        border-radius: 4px;
+        width: 0;                 /* Animation start */
+        transition: width 1s ease;
+        }
+        
+        .project-card {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .reveal {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particle-bg" class="particle-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-semibold">Du Yao</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-blue-400">Home</a>
+                    <a href="projects.html" class="nav-link">Projects</a>
+                    <a href="research.html" class="nav-link">Research</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="mb-8">
+                <img src="resources/avatar.png" alt="Du Yao" class="w-46 h-64 rounded-full mx-auto mb-6 border-4 border-white/20 shadow-2xl">
+            </div>
+            
+            <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Du Yao
+            </h1>
+            
+            <h2 class="text-2xl md:text-3xl mb-4 text-blue-200">
+                Human Factors Engineer × AI Interaction Design Researcher
+            </h2>
+            
+            <p class="text-lg md:text-xl mb-8 text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Making AI more usable through cognitive science, making complex information simpler through design.<br>
+                Focused on RLHF interface optimization and human-computer interaction research
+            </p>
+
+            <!-- Core Skills Radar Chart -->
+            <div class="max-w-4xl mx-auto">
+              <h3 class="text-2xl font-semibold mb-8 text-white">Core Skills</h3>
+              <div id="skills-chart" class="h-96 w-full"></div>
+            </div>
+
+            <script>    
+            document.addEventListener('DOMContentLoaded', () => {
+              const bars = document.querySelectorAll('.skill-progress');
+              const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.dataset.width + '%';
+                    observer.unobserve(entry.target);
+                  }
+                });
+              });
+              bars.forEach(bar => observer.observe(bar));
+            });
+
+            function initSkillsChart(){
+              const chartDom = document.getElementById('skills-chart');
+              if(!chartDom) return;
+              const myChart = echarts.init(chartDom);
+              const option = {
+                backgroundColor:'transparent',
+                radar:{
+                  indicator:[
+                    {name:'Human Factors',max:100},
+                    {name:'Interaction Design',max:100},
+                    {name:'User Research',max:100},
+                    {name:'Data Analysis',max:100},
+                    {name:'Programming',max:100},
+                    {name:'Academic Writing',max:100}
+                  ],
+                  shape:'polygon',
+                  splitNumber:4,
+                  axisName:{color:'rgba(255,255,255,.8)',fontSize:14},
+                  splitLine:{lineStyle:{color:'rgba(255,255,255,.2)'}},
+                  axisLine:{lineStyle:{color:'rgba(255,255,255,.3)'}}
+                },
+                series:[{
+                  name:'Skill Level',
+                  type:'radar',
+                  data:[{
+                    value:[90,90,88,85,80,88],
+                    name:'My Skills',
+                    areaStyle:{color:'rgba(96,165,250,.3)'},
+                    lineStyle:{color:'#60a5fa',width:2},
+                    itemStyle:{color:'#60a5fa'}
+                  }]
+                }]
+              };
+              myChart.setOption(option);
+              window.addEventListener('resize',()=>myChart.resize());
+            }
+            document.addEventListener('DOMContentLoaded',()=>setTimeout(initSkillsChart,500));
+            </script>
+
+            <!-- Featured Projects -->
+            <section id="projects" class="py-20 px-6">
+              <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 text-white">Featured Projects</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <!-- Project 1 Leadership Dashboard -->
+                  <div class="project-card glass-card rounded-2xl p-6">
+                    <div class="h-48 bg-purple-600 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="resources/leader-project.png" alt="cockpit" class="h-full w-full object-cover drop-shadow-lg">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Leadership Dashboard Interface Optimization</h3>
+                    <p class="text-gray-300 mb-4">Large-screen interface design based on cognitive load theory, reducing cognitive burden</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Human Factors</span>
+                      <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">UI Design</span>
+                      <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">HCII 2025</span>
+                    </div>
+                    <button class="glass-button w-full py-2 rounded-lg" onclick="location.href='projects.html#leadership'">View Details</button>
+                  </div>
+
+                  <!-- Project 2 Military Equipment Platform -->
+                  <div class="project-card glass-card rounded-2xl p-6">
+                    <div class="h-48 bg-green-600 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="resources/military-platform.png" alt="equipment-green" class="h-full w-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Equipment Interface Application Platform</h3>
+                    <p class="text-gray-300 mb-4">Military Science Commission project, designed 300+ interface interactions, supporting brain-computer experiments</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">Interaction Design</span>
+                      <span class="px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-sm">User Research</span>
+                      <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Deployed</span>
+                    </div>
+                    <button class="glass-button w-full py-2 rounded-lg" onclick="location.href='projects.html#military'">View Details</button>
+                  </div>
+
+                  <!-- Project 3 RLHF Interface Research -->
+                  <div class="project-card glass-card rounded-2xl p-6">
+                    <div class="h-48 bg-pink-600 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="resources/research-bg.png" alt="rlhf-pink" class="h-full w-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">RLHF Interface Optimization Research</h3>
+                    <p class="text-gray-300 mb-4">Conversational RLHF interface design research based on shared mental models</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm">AI Interaction</span>
+                      <span class="px-3 py-1 bg-rose-500/20 text-rose-300 rounded-full text-sm">RLHF</span>
+                      <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">Submitted</span>
+                    </div>
+                    <button class="glass-button w-full py-2 rounded-lg" onclick="location.href='projects.html#rlhf'">View Details</button>
+                  </div>
+                </div>
+
+                <!-- More Projects Entry -->
+                <div class="text-center mt-12">
+                  <button class="glass-button px-6 py-3 rounded-full" onclick="location.href='projects.html'">View All Projects</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Initialize Animation & Radar Chart -->
+            <script>
+            /* Card fade-in and upward animation */
+            document.addEventListener('DOMContentLoaded',()=>{
+              anime({
+                targets: '.project-card',
+                opacity: [0,1],
+                translateY: [50,0],
+                duration: 800,
+                easing: 'easeOutQuart',
+                delay: anime.stagger(150,{start:300})
+              });
+            });
+
+            /* Radar Chart Initialization */
+            function initSkillsChart(){
+              const chartDom = document.getElementById('skills-chart');
+              if(!chartDom) return;
+              const myChart = echarts.init(chartDom);
+              const option = {
+                backgroundColor:'transparent',
+                radar:{
+                  indicator:[
+                    {name:'Human Factors',max:100},
+                    {name:'Interaction Design',max:100},
+                    {name:'User Research',max:100},
+                    {name:'Data Analysis',max:100},
+                    {name:'Programming',max:100},
+                    {name:'Academic Writing',max:100}
+                  ],
+                  shape:'polygon',
+                  splitNumber:4,
+                  axisName:{color:'rgba(255,255,255,.8)',fontSize:14},
+                  splitLine:{lineStyle:{color:'rgba(255,255,255,.2)'}},
+                  axisLine:{lineStyle:{color:'rgba(255,255,255,.3)'}}
+                },
+                series:[{
+                  name:'Skill Level',
+                  type:'radar',
+                  data:[{
+                    value:[95,90,88,85,80,92],
+                    name:'My Skills',
+                    areaStyle:{color:'rgba(96,165,250,.3)'},
+                    lineStyle:{color:'#60a5fa',width:2},
+                    itemStyle:{color:'#60a5fa'}
+                  }]
+                }]
+              };
+              myChart.setOption(option);
+              window.addEventListener('resize',()=>myChart.resize());
+            }
+            setTimeout(initSkillsChart,600);
+            </script>
+        </div>
+    </section>
+    
+    <!-- Research Highlights -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16">Research Highlights</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Academic Achievements</h3>
+                    <div class="space-y-6">
+                        <div class="glass-card p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">Multi-Chart Layout Design Research</h4>
+                            <p class="text-gray-300 mb-3">HCII 2025 · First Author</p>
+                            <p class="text-sm text-gray-400">Unity interaction experiment + LMM cognitive load assessment → High-fidelity interface prototype</p>
+                        </div>
+                        
+                        <div class="glass-card p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">RLHF Interface Design Research</h4>
+                            <p class="text-gray-300 mb-3">Submitted · First Author</p>
+                            <p class="text-sm text-gray-400">Conversational RLHF interface based on SMM, validated with behavioral and eye-tracking data</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Tech Stack</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Python</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Unity/C#</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Figma/Design Tools</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>SPSS/Data Analysis</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="82"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>SolidWorks/CATIA</span>                                
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12">Contact Me</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-6 rounded-xl text-center">
+                <div class="text-3xl mb-3">📧</div>
+                <h3 class="font-semibold mb-2">Email</h3>
+                <p class="text-sm text-gray-400">duyao@seu.edu.cn</p>
+            </div>
+            <div class="glass-card p-6 rounded-xl text-center">
+                <div class="text-3xl mb-3">📱</div>
+                <h3 class="font-semibold mb-2">Phone</h3>
+                <p class="text-sm text-gray-400">199-6075-4753</p>
+            </div>
+            </div>
+            
+            <!-- Download Resume Buttons -->
+            <div class="flex justify-center items-center gap-4 mt-8">
+            <!-- Chinese -->
+            <a href="resources/CV-DuYao-CN.pdf" download
+                class="glass-button px-6 py-3 rounded-full inline-flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download Chinese Resume
+            </a>
+
+            <!-- English -->
+            <a href="resources/CV-DuYao-EN.pdf" download
+                class="glass-button px-6 py-3 rounded-full inline-flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download English CV
+            </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-400 border-t border-white/10">
+        <p>&copy; 2025 Du Yao. fighting fighting fighting 💪</p>
+    </footer>
+    
+    <script src="main.js"></script>
+</body>
+</html>
